@@ -3,7 +3,6 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os 
 from concurrent.futures import ThreadPoolExecutor
-
 from Agents.Cardiologist import Cardiologist
 from Agents.Psychologist import Psychologist
 from Agents.Pulmonogist import Pulmonogist
@@ -21,9 +20,8 @@ client = OpenAI(
   api_key=APIKEY
 )
 
-
 # read the medical report
-with open("Medical Reports\Medical Rerort - Michael Johnson.txt", "r") as file:
+with open("Medical Reports\Medical Rerort - Michael Johnson - Panic Attack Disorder.txt", "r") as file:
     medical_report = file.read()
 
 # print(medical_report)
@@ -49,6 +47,8 @@ with ThreadPoolExecutor(max_workers=3) as executor:
     psychologist_response = future_psychologist.result()
     pulmonogist_response = future_pulmonologist.result()
 
+
+# Prompt for the GPT-4o model to combine the responses of the agents and generate a final diagnosis
 
 prompt = f"""
 Act like a multidisciplinary team of healthcare professionals.
@@ -86,3 +86,5 @@ response_text = response.choices[0].message.content
 # save the respnse to a file 
 with open("Results\Results - Michael Johnson", "w") as file:
     file.write(response_text)
+
+print("the diagnosis has been saved to a file.")

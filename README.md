@@ -16,7 +16,7 @@ In the current version, we have implemented three AI agents using GPT-4o, each s
   
 - **Recommendation**: Suggest additional cardiovascular testing or continuous monitoring if necessary to uncover hidden heart-related problems. Provide management strategies if a cardiovascular issue is identified.
 
-**2. Psychiatrist Agent**
+**2. Psychologist Agent**
 
 - **Focus**: Determine if the symptoms align with a psychological condition, such as panic disorder or another anxiety-related issue. Assess the impact of stress, anxiety, and lifestyle factors on the patient’s overall condition.
   

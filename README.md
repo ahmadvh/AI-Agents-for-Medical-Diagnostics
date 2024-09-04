@@ -1,10 +1,12 @@
 # AI-Agents-for-Medical-Diagnostics
 
+![AI Agent Workflow](https://github.com/user-attachments/assets/d33bb192-c0c1-4fb0-8346-fd7e0a61b329)
+
 A Python project designed to create specialized LLM-based AI agents that analyze complex medical cases. The system integrates insights from various medical professionals to provide comprehensive assessments and personalized treatment recommendations, demonstrating the potential of AI in multidisciplinary medicine.
 
 ## Current Version Overview
 
-In the current version, we have implemented three AI agents using GPT-4, each specializing in a different aspect of medical analysis. A medical report is passed to each of these agents, who then analyze the report simultaneously using threading, based on their specific area of expertise. Each agent provides recommendations and diagnoses from their perspective. After all AI agents complete their analyses, the results are combined and passed to a large language model, which summarizes the findings and identifies three potential health issues for the patient.
+In the current version, we have implemented three AI agents using GPT-4o, each specializing in a different aspect of medical analysis. A medical report is passed to each of these agents, who then analyze the report simultaneously using threading, based on their specific area of expertise. Each agent provides recommendations and diagnoses from their perspective. After all AI agents complete their analyses, the results are combined and passed to a large language model, which summarizes the findings and identifies three potential health issues for the patient.
 
 ### AI Agents
 
@@ -26,13 +28,13 @@ In the current version, we have implemented three AI agents using GPT-4, each sp
   
 - **Recommendation**: Suggest additional respiratory evaluations, such as lung function tests or exercise-induced bronchoconstriction tests, to rule out any underlying lung conditions. Recommend breathing exercises or other treatments if a respiratory issue is suspected.
 
-![AI Agent Workflow](https://github.com/user-attachments/assets/d33bb192-c0c1-4fb0-8346-fd7e0a61b329)
-
 ## Future Enhancements
 
-In future versions, the system could expand to include a broader range of AI agents, each specializing in different medical fields, such as neurology, endocrinology, and immunology, to provide even more comprehensive analyses. These AI agents could be implemented using the [Assistant API from OpenAI](https://platform.openai.com/docs/assistants/overview) and leverage function calling and code interpreter capabilities to enhance their intelligence and effectiveness. Additionally, advanced parsing methodologies could be introduced to handle medical reports with more complex structures, allowing the system to accurately interpret and analyze a wider variety of medical data.
+In future versions, the system could expand to include a broader range of AI agents, each specializing in different medical fields, such as neurology, endocrinology, and immunology, to provide even more comprehensive analyses. These AI agents could be implemented using the [Assistant API from OpenAI](https://platform.openai.com/docs/assistants/overview) and use `function calling` and `code interpreter` capabilities to enhance their intelligence and effectiveness. Additionally, advanced parsing methodologies could be introduced to handle medical reports with more complex structures, allowing the system to accurately interpret and analyze a wider variety of medical data.
 
 ## Repository Structure
 
-- **Medical Reports Folder**: Contains generated medical reports, including cases such as a patient with Panic Attack disorder.
-- **Results Folder**: Stores the outputs of the agentic system, detailing the analyses and recommendations provided by each AI agent.
+- **Medical Reports Folder**: Contains a synthetic medical report of a patient with Panic Attack disorder.
+- **Results Folder**: Stores the outputs of the agentic system.
+  
+**To be able to run the code, please insert your OpenAI API key within the `apikey.env` file.**

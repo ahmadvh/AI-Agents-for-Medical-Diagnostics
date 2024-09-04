@@ -1,0 +1,26 @@
+Medical Case Report
+Patient ID: 345678
+Name: Michael Johnson
+Age: 29
+Gender: Male
+Date of Report: 2024-09-04
+
+Chief Complaint:
+The patient reports experiencing sudden episodes of intense chest pain, heart palpitations, shortness of breath, dizziness, and sweating over the past three months. These episodes typically last for about 10-20 minutes and occur without warning, usually once or twice a week. The patient describes a feeling of impending doom during these episodes and fears having a heart attack.
+
+Medical History:
+Family History: No known history of heart disease. Mother has generalized anxiety disorder; father has no significant medical history.
+Personal Medical History:
+Anxiety: Diagnosed at age 25; managed with cognitive behavioral therapy (CBT) and occasional use of benzodiazepines.
+Gastroesophageal Reflux Disease (GERD): Diagnosed at age 27; managed with proton pump inhibitors (PPIs) and dietary changes.
+Lifestyle Factors: The patient works in a high-stress job as an investment banker, reports occasional use of caffeine and alcohol, and exercises irregularly.
+Medications: Lorazepam (0.5 mg as needed for anxiety), Omeprazole (20 mg daily).
+Recent Lab and Diagnostic Results:
+Electrocardiogram (ECG): Normal sinus rhythm; no signs of ischemia or arrhythmia detected.
+Blood Tests: Cardiac enzymes (troponin, CK-MB) within normal limits; thyroid function tests normal.
+Holter Monitor (24-hour monitoring): No significant arrhythmias; occasional premature ventricular contractions (PVCs) noted.
+Echocardiogram: Normal cardiac structure and function; ejection fraction 60%.
+Physical Examination Findings:
+Vital Signs: Blood pressure 122/78 mmHg, heart rate 82 bpm, BMI 23.4.
+Cardiovascular Exam: Normal heart sounds; no murmurs, gallops, or rubs.
+Respiratory Exam: Clear breath sounds; no wheezing or crackles.

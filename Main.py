@@ -1,90 +1,58 @@
-# importing the required libraries
-from openai import OpenAI
+# Importing the needed modules 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from dotenv import load_dotenv
-import os 
-from concurrent.futures import ThreadPoolExecutor
-from Agents.Cardiologist import Cardiologist
-from Agents.Psychologist import Psychologist
-from Agents.Pulmonogist import Pulmonogist
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from Utils.Agents import Cardiologist, Psychologist, Pulmonologist, MultidisciplinaryTeam
+from dotenv import load_dotenv
+import json, os
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Loading API key and organization ID from a dotenv file
-load_dotenv(dotenv_path='apikey.env')
-
-# Retrieving API key and organization ID from environment variables
-APIKEY = os.getenv("APIKEY")
-ORGID = os.getenv("ORGID")
-
-# Creating an instance of the OpenAI client with the provided API key and organization ID
-client = OpenAI(
-  organization= ORGID,
-  api_key=APIKEY
-)
+# Loading API key from a dotenv file.
+load_dotenv(dotenv_path='.env')
 
 # read the medical report
 with open("Medical Reports\Medical Rerort - Michael Johnson - Panic Attack Disorder.txt", "r") as file:
     medical_report = file.read()
 
-# print(medical_report)
 
-# define the agents
-agent1 = Cardiologist(medical_report, client)
-agent2 = Psychologist(medical_report, client)
-agent3 = Pulmonogist(medical_report, client)
+agents = {
+    "Cardiologist": Cardiologist(medical_report),
+    "Psychologist": Psychologist(medical_report),
+    "Pulmonologist": Pulmonologist(medical_report)
+}
 
-# define a function to get the response of an agent
-def get_response(agent):
-    return agent.generate_response()
+# Function to run each agent and get their response
+def get_response(agent_name, agent):
+    response = agent.run()
+    return agent_name, response
 
-# Run all agents concurrently using ThreadPoolExecutor
-with ThreadPoolExecutor(max_workers=3) as executor:
-    # Submit tasks to the executor
-    future_cardiologist = executor.submit(get_response, agent1)
-    future_psychologist = executor.submit(get_response, agent2)
-    future_pulmonologist = executor.submit(get_response, agent3)
+# Run the agents concurrently and collect responses
+responses = {}
+with ThreadPoolExecutor() as executor:
+    futures = {executor.submit(get_response, name, agent): name for name, agent in agents.items()}
+    
+    for future in as_completed(futures):
+        agent_name, response = future.result()
+        responses[agent_name] = response
 
-    # Collect results
-    cardiologist_response = future_cardiologist.result()
-    psychologist_response = future_psychologist.result()
-    pulmonogist_response = future_pulmonologist.result()
-
-
-# Prompt for the GPT-4o model to combine the responses of the agents and generate a final diagnosis
-
-prompt = f"""
-Act like a multidisciplinary team of healthcare professionals.
-You will receive a medical report of a patient visited by a Cardiologist, Psychologist, and Pulmonogist.
-Task: Review the patient's medical report from the Cardiologist, Psychologist, and Pulmonogist, analyze them and come up with a list of 3 possible health issues of the patient.
-Just return a list of bulletpoints of 3 possible health issues of the patient and for each issue provide the reason.
-"""
-
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {
-            "role": "user",
-            "content": prompt
-        },
-        {
-            "role": "assistant",
-            "content": cardiologist_response
-        },
-        {
-            "role": "assistant",
-            "content": psychologist_response
-        },
-        {
-            "role": "assistant",
-            "content": pulmonogist_response
-        }
-    ],
-    max_tokens=1000,
-    top_p=1
+team_agent = MultidisciplinaryTeam(
+    cardiologist_report=responses["Cardiologist"],
+    psychologist_report=responses["Psychologist"],
+    pulmonologist_report=responses["Pulmonologist"]
 )
 
-response_text = response.choices[0].message.content
+# Run the MultidisciplinaryTeam agent to generate the final diagnosis
+final_diagnosis = team_agent.run()
+final_diagnosis_text = "### Final Diagnosis:\n\n" + final_diagnosis
+txt_output_path = "results/final_diagnosis.txt"
 
-# save the respnse to a file 
-with open("Results\Results - Michael Johnson", "w") as file:
-    file.write(response_text)
+# Ensure the directory exists
+os.makedirs(os.path.dirname(txt_output_path), exist_ok=True)
 
-print("the diagnosis has been saved to a file.")
+# Write the final diagnosis to the text file
+with open(txt_output_path, "w") as txt_file:
+    txt_file.write(final_diagnosis_text)
+
+print(f"Final diagnosis has been saved to {txt_output_path}")
+
+
